@@ -1,6 +1,3 @@
-Here is the complete `README.md` file formatted properly for you to copy and paste:
-
-```markdown
 # cairo_doc_gen
 
 A Scarb library for generating HTML documentation from comments in Cairo smart contracts.
@@ -11,14 +8,14 @@ A Scarb library for generating HTML documentation from comments in Cairo smart c
 
 ## Installation
 
-1. Add `cairo_doc_gen` to your Scarb project dependencies:
+1. Copy Paste `run_docgen.sh` at the root of your project:
 
-   ```toml
-   [dependencies]
-   cairo_doc_gen = { git = "https://github.com/SebastienValla/cairo_doc_gen.git" }
+2. Ensure your `src/` directory includes all your `.cairo` files
+
+3. ```bash
+       chmod -x ./run_docgen.sh
    ```
-
-2. Ensure the `templates/` directory includes `doc_template.html`, the HTML template used for rendering documentation.
+   your doc will be generated in `./documentation/documentation.html`
 
 ## Comment Format
 
@@ -57,27 +54,20 @@ fn transfer(sender: felt252, recipient: felt252, amount: u128) -> bool {
 
 1. Write structured comments in your Cairo contracts using the format above.
 
-2. Run the documentation generator in your Rust project:
+2. Follow ## Installation instructions
 
-   ```rust
-   use cairo_doc_gen::generate_html;
-   use cairo_doc_gen::parser::parse_cairo_comments;
-   use std::fs;
-
-   fn main() {
-       let contract_content = fs::read_to_string("path/to/your_contract.cairo")
-           .expect("Unable to read contract file");
-       let docs = parse_cairo_comments(&contract_content);
-       let html = generate_html(docs).expect("Error generating HTML");
-       fs::write("output/contract_documentation.html", html)
-           .expect("Unable to write HTML file");
-   }
-   ```
-
-3. Open `output/contract_documentation.html` to view the generated documentation in a browser.
+3. Open `output/documentation.html` to view the generated documentation in a browser.
 
 ## Contribution
 
 Feel free to open issues or contribute to this project with suggestions and improvements.
 
+## Buy me a coffee 
 
+You like this project ? You can contribute to this project sending found to this  starknet address : 
+
+0x03E1b6776b55A0dcf665a0f538831FA83f7eAB29A3135D16f31DEabd432a1Ec1
+
+ou EVM : 
+
+0x7ea23185a79895fe4717d050ae18aca6da1934dc
