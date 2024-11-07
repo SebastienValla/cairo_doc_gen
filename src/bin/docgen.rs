@@ -2,15 +2,16 @@ use cairo_doc_gen::html_renderer::generate_html;
 use cairo_doc_gen::parser::parse_cairo_comments;
 use std::fs::{self, File};
 use std::io::Read;
+use std::path::Path;
 
 fn main() -> std::io::Result<()> {
-    // Vector to hold all the FunctionDocs
+    // Vector to hold all FunctionDocs
     let mut all_docs = Vec::new();
 
     // Path to the src directory
-    let src_path = "./src";
+    let src_path = "./src"; // Looks in the "src" directory within the root
 
-    // Iterate over all .cairo files in src
+    // Iterate over all .cairo files in the src directory
     for entry in fs::read_dir(src_path)? {
         let entry = entry?;
         let path = entry.path();
@@ -30,16 +31,18 @@ fn main() -> std::io::Result<()> {
         }
     }
 
-    // Generate the HTML documentation from all docs
+    // Generate HTML documentation from all collected docs
     let html = generate_html(all_docs).expect("Error generating HTML");
 
-    // Ensure the output directory exists
-    fs::create_dir_all("output")?;
+    // Ensure the documentation directory exists at the project root
+    let output_dir = Path::new("../documentation");
+    fs::create_dir_all(output_dir)?;
 
-    // Write the HTML to a file
-    fs::write("output/documentation.html", html)?;
+    // Write the HTML documentation to a file in the "documentation" directory at the project root
+    let output_path = output_dir.join("documentation.html");
+    fs::write(&output_path, html)?;
 
-    println!("Documentation generated at output/documentation.html");
+    println!("Documentation generated at {}", output_path.display());
 
     Ok(())
 }
