@@ -2,19 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation Cairo</title>
+    <title>Cairo Contract Documentation</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body.light-mode {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        body.dark-mode {
+            background-color: #212529;
+            color: #f8f9fa;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .function-doc {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            background-color: inherit;
+        }
+        .filename {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .description {
+            font-size: 1.25em;
+            margin-top: 10px;
+        }
+        .parameters, .returns {
+            margin-top: 15px;
+        }
+        .parameters ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
 </head>
-<body>
-    <h1>Documentation Cairo</h1>
-    {% for doc in docs %}
-        <h2>{{ doc.description }}</h2>
-        <p>Return Type: {{ doc.return_type }}</p>
-        <ul>
-        {% for param in doc.params %}
-            <li>{{ param.0 }}: {{ param.1 }}</li>
+<body class="light-mode">
+    <div class="container">
+        <h1 class="text-center mb-4">Cairo Contract Documentation</h1>
+        <div class="text-center mb-4">
+            <button id="modeToggle" class="btn btn-outline-secondary">Switch to Dark Mode</button>
+        </div>
+        {% for doc in docs %}
+        <div class="function-doc border">
+            <div class="filename">File: {{ doc.filename }}</div>
+            <div class="description"><strong>{{ doc.description }}</strong></div>
+            {% if doc.params %}
+            <div class="parameters">
+                <h5>Parameters:</h5>
+                <ul class="list-unstyled">
+                    {% for param in doc.params %}
+                    <li><strong>{{ param.0 }}:</strong> {{ param.1 }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if doc.return_type %}
+            <div class="returns">
+                <h5>Returns:</h5>
+                <p>{{ doc.return_type }}</p>
+            </div>
+            {% endif %}
+        </div>
         {% endfor %}
-        </ul>
-    {% endfor %}
+    </div>
+
+    <script>
+        const modeToggle = document.getElementById("modeToggle");
+        modeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            document.body.classList.toggle("light-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                modeToggle.textContent = "Switch to Light Mode";
+            } else {
+                modeToggle.textContent = "Switch to Dark Mode";
+            }
+        });
+    </script>
 </body>
 </html>
