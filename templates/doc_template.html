@@ -16,6 +16,17 @@
         .container {
             margin-top: 30px;
         }
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: inherit;
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 1px solid #dee2e6;
+        }
         .function-doc {
             margin-bottom: 40px;
             padding: 20px;
@@ -38,48 +49,104 @@
             list-style-type: disc;
             margin-left: 20px;
         }
+        /* Toggle switch styling */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
     </style>
 </head>
-<body class="light-mode">
+<body class="dark-mode">
     <div class="container">
         <h1 class="text-center mb-4">Cairo Contract Documentation</h1>
         <div class="text-center mb-4">
-            <button id="modeToggle" class="btn btn-outline-secondary">Switch to Dark Mode</button>
+            <label class="switch">
+                <input type="checkbox" id="themeToggle" checked>
+                <span class="slider"></span>
+            </label>
+            <span class="ml-2">Toggle Dark Mode</span>
         </div>
-        {% for doc in docs %}
-        <div class="function-doc border">
-            <div class="filename">File: {{ doc.filename }}</div>
-            <div class="description"><strong>{{ doc.description }}</strong></div>
-            {% if doc.params %}
-            <div class="parameters">
-                <h5>Parameters:</h5>
+        
+        <!-- Documentation Sections -->
+        <div class="row">
+            <div class="col-md-9">
+                {% for doc in docs %}
+                <div id="file-{{ doc.filename | slugify }}" class="function-doc border">
+                    <div class="filename">File: {{ doc.filename }}</div>
+                    <div class="description"><strong>{{ doc.description }}</strong></div>
+                    {% if doc.params %}
+                    <div class="parameters">
+                        <h5>Parameters:</h5>
+                        <ul class="list-unstyled">
+                            {% for param in doc.params %}
+                            <li><strong>{{ param.0 }}:</strong> {{ param.1 }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    {% if doc.return_type %}
+                    <div class="returns">
+                        <h5>Returns:</h5>
+                        <p>{{ doc.return_type }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Sidebar for Navigation -->
+            <div class="col-md-3 sidebar">
+                <h4>Files</h4>
                 <ul class="list-unstyled">
-                    {% for param in doc.params %}
-                    <li><strong>{{ param.0 }}:</strong> {{ param.1 }}</li>
+                    {% for doc in docs %}
+                    <li><a href="#file-{{ doc.filename | slugify }}">{{ doc.filename }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
-            {% endif %}
-            {% if doc.return_type %}
-            <div class="returns">
-                <h5>Returns:</h5>
-                <p>{{ doc.return_type }}</p>
-            </div>
-            {% endif %}
         </div>
-        {% endfor %}
     </div>
 
     <script>
-        const modeToggle = document.getElementById("modeToggle");
-        modeToggle.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-            document.body.classList.toggle("light-mode");
-            if (document.body.classList.contains("dark-mode")) {
-                modeToggle.textContent = "Switch to Light Mode";
-            } else {
-                modeToggle.textContent = "Switch to Dark Mode";
-            }
+        // Theme toggle logic
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.addEventListener("change", () => {
+            document.body.classList.toggle("dark-mode", themeToggle.checked);
+            document.body.classList.toggle("light-mode", !themeToggle.checked);
         });
     </script>
 </body>
