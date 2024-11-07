@@ -8,3 +8,7 @@ description = "Cairo Documentation Generator Library"
 regex = "1.5"      # Pour extraire les commentaires avec des expressions régulières
 tera = "1.10.0"    # Pour générer le HTML à partir des modèles
 serde = { version = "1.0", features = ["derive"] }
+
+[[bin]]
+name = "docgen"
+path = "src/bin/docgen.rs"

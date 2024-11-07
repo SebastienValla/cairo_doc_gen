@@ -7,3 +7,7 @@ edition = "2024_07"
 
 [dependencies]
 cairo_doc_gen = { path = "../cairo_doc_gen" }
+[[bin]]
+name = "docgen"
+path = "src/bin/docgen.rs"
+
