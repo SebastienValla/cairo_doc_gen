@@ -76,6 +76,7 @@ dependencies = [
  "regex",
  "serde",
  "tera",
+ "walkdir",
 ]
 
 [[package]]
