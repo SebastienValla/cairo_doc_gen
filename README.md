@@ -8,6 +8,8 @@ A Scarb library for generating HTML documentation from comments in Cairo smart c
 
 ## Installation
 
+You need to have cargo installed
+
 1. Copy Paste `run_docgen.sh` at the root of your project:
 
 2. Ensure your `src/` directory includes all your `.cairo` files
