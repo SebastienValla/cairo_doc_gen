@@ -1,0 +1,10 @@
+[package]
+name = "cairo_doc_gen"
+version = "0.1.0"
+edition = "2021"
+description = "Cairo Documentation Generator Library"
+
+[dependencies]
+regex = "1.5"      # Pour extraire les commentaires avec des expressions régulières
+tera = "1.10.0"    # Pour générer le HTML à partir des modèles
+serde = { version = "1.0", features = ["derive"] }
