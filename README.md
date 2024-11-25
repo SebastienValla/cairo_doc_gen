@@ -1,6 +1,6 @@
 # cairo_doc_gen
 
-A Scarb library for generating HTML documentation from comments in Cairo smart contracts.
+A library for generating HTML documentation from comments in Cairo smart contracts.
 
 ## Overview
 
